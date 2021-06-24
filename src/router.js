@@ -15,11 +15,13 @@ const router = createRouter({
     {
       path: '/coaches/:id',
       component: CoachDetail,
-      children: [{ path: 'contact', component: ContactCoach }] // /coaches/01/contact
+      children: [
+        { path: 'contact', component: ContactCoach } // /coaches/c1/contact
+      ]
     },
     { path: '/register', component: CoachRegistration },
     { path: '/requests', component: RequestsReceived },
-    { path: '/:404(.*)', component: NotFound } // standart 404 vue
+    { path: '/:notFound(.*)', component: NotFound } // standart vue 404 page
   ]
 });
 
