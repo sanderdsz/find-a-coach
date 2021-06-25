@@ -1,6 +1,6 @@
 <template>
   <section>
-    <coach-filter></coach-filter>
+    <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
   <section>
     <base-card>
@@ -33,13 +33,46 @@ export default {
     CoachItem,
     CoachFilter,
   },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        carrer: true,
+      },
+    };
+  },
   computed: {
     filteredCoaches() {
       // ['coaches/coaches'] first is spacename second is the getter
-      return this.$store.getters['coaches/coaches'];
+      const coaches = this.$store.getters['coaches/coaches'];
+      // calling filter method to a array
+      return coaches.filter((coach) => {
+        // if the filter is true and the coach have frontend in your area stored
+        if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
+          return true;
+        }
+        if (this.activeFilters.backend && coach.areas.includes('backend')) {
+          return true;
+        }
+        if (this.activeFilters.career && coach.areas.includes('career')) {
+          return true;
+        }
+        return false;
+      });
     },
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches'];
+    },
+  },
+  methods: {
+    /*
+     * pass updatedFilters as argument from $emit at coachFilter
+     * listening this event receiving as argment at setFilters
+     * then overrun the activeFilters with the updatedFilters
+     */
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
     },
   },
 };
