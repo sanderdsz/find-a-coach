@@ -1,5 +1,7 @@
 <template>
-  <section>Filter</section>
+  <section>
+    <coach-filter></coach-filter>
+  </section>
   <section>
     <base-card>
       <div class="controls">
@@ -10,6 +12,7 @@
         <coach-item
           v-for="coach in filteredCoaches"
           :key="coach.id"
+          :id="coach.id"
           :first-name="coach.firstName"
           :last-name="coach.lastName"
           :rate="coach.hourlyRate"
@@ -23,10 +26,12 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 export default {
   components: {
     CoachItem,
+    CoachFilter,
   },
   computed: {
     filteredCoaches() {
